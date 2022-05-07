@@ -1089,3 +1089,29 @@ for(i = 0; i < 100; i++)
 ### Alocação Dinânamica de Memória
 
 ### Arquivos
+
+Funções para manipular arquivos.
+
+| Função | O que faz |
+| :---: | --- |
+| fopen() | Abre um arquivo. |
+| fclose() | Fecha o arquivo garantindo a transferência do buffer. |
+| fflush() | Descarrega o buffer. |
+| fscanf() | Leitura de entrada formatada (semelhante ao scanf()). |
+| fprintf() | Escrita de saída formatada (semelhante ao printf()). |
+| fgets() | Obtém uma string do arquivo. |
+| fgetc() | Obtém um caracter do arquivo. |
+| fputs() | Insere uma string no arquivo. |
+| fputc() | Insere um caracter no arquivo. |
+| fread() | Lê um bloco de dados do arquivo. |
+| fwrite() | Escreve um bloco de dados no arquivo. |
+| fseek() | Reposiciona o ponteiro. |
+| rewind() | Reposiciona o ponteiro para o início do arquivo. |
+| ftell() | Retorna a posição do ponteiro. |
+
+”r” Abre o arquivo somente para leitura, a partir do início. O arquivo deve existir.
+”w” Cria um arquivo vazio para escrita. Se já havia o arquivo, ele é perdido.
+”a” Adiciona no final do arquivo. Se o arquivo não existir, a função o cria.
+”r+” Abre o arquivo para leitura e escrita, a partir do início. O arquivo deve existir.
+”w+” Cria um arquivo vazio para leitura e escrita. Se já havia o arquivo, ele é perdido.
+”a+” Abre para adição ou leitura no final do arquivo. Se o arquivo não existir, a função o cria
