@@ -1088,6 +1088,30 @@ for(i = 0; i < 100; i++)
 
 ### Alocação Dinânamica de Memória
 
+Para alocar um vetor dinamicamente você deve usar a função `malloc` ou `calloc`. Você deve saber operar ponteiros para entender brevemente como funciona.
+
+Por exemplo, para alocar um vetor com 10 posições de inteiro:
+
+`int *vetor = malloc(sizeof(int) * 10);`
+
+A mesma coisa pode ser feita com a função calloc assim:
+
+`int *vetor = calloc (10,sizeof(int))`
+
+Você pode alterar o valor 10 para alguma variável que você leu do usuário anteriormente.
+
+O acesso as posições do vetor é feito da mesma forma como se fosse um vetor alocado estaticamente: `vetor[0]`, `vetor[1]` e assim por diante.
+
+Caso precise alterar o tamanho do vetor em tempo de execução (dinamicamente), você pode usar a função realloc, por exemplo, para aumentar o tamanho do vetor alocado para 20:
+
+`vetor = realloc(vetor, 20 * sizeof(int));`
+
+Não esqueça de incluir a biblioteca `<stdlib.h>` que contém as funções de alocação dinâmica.
+
+Importante: Esse espaço alocado não será mais liberado a não ser que você explicitamente libere com o comando free(vetor). Se você esquecer de desalocar e perder a referência para o ponteiro do vetor, seu programa terá memória desperdiçada que você não conseguirá mais recuperar. Isso acontece para memória alocada dinamicamente.
+
+Os sistemas operacionais modernos desalocam a memória do seu programa (inclusive a que foi perdida) após a execução dele, mesmo que você esqueça de desalocar manualmente.
+
 ### Arquivos
 
 Funções para manipular arquivos.
@@ -1109,9 +1133,11 @@ Funções para manipular arquivos.
 | rewind() | Reposiciona o ponteiro para o início do arquivo. |
 | ftell() | Retorna a posição do ponteiro. |
 
-”r” Abre o arquivo somente para leitura, a partir do início. O arquivo deve existir.
-”w” Cria um arquivo vazio para escrita. Se já havia o arquivo, ele é perdido.
-”a” Adiciona no final do arquivo. Se o arquivo não existir, a função o cria.
-”r+” Abre o arquivo para leitura e escrita, a partir do início. O arquivo deve existir.
-”w+” Cria um arquivo vazio para leitura e escrita. Se já havia o arquivo, ele é perdido.
-”a+” Abre para adição ou leitura no final do arquivo. Se o arquivo não existir, a função o cria
+| Opção | O que faz |
+| :---: | --- |
+| r | Abre o arquivo somente para leitura, a partir do início. O arquivo deve existir. |
+| w | Cria um arquivo vazio para escrita. Se já havia o arquivo, ele é perdido. |
+| a | Adiciona no final do arquivo. Se o arquivo não existir, a função o cria. |
+| r+ | Abre o arquivo para leitura e escrita, a partir do início. O arquivo deve existir. |
+| w+ | Cria um arquivo vazio para leitura e escrita. Se já havia o arquivo, ele é perdido. |
+| a+ | Abre para adição ou leitura no final do arquivo. Se o arquivo não existir, a função o cria |
