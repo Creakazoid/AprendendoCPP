@@ -1141,3 +1141,98 @@ Funções para manipular arquivos.
 | r+ | Abre o arquivo para leitura e escrita, a partir do início. O arquivo deve existir. |
 | w+ | Cria um arquivo vazio para leitura e escrita. Se já havia o arquivo, ele é perdido. |
 | a+ | Abre para adição ou leitura no final do arquivo. Se o arquivo não existir, a função o cria |
+
+
+## Alinhar colunas na função printf em C
+
+### Use a notação `%{integer}d` para alinhar a saída em C
+
+printf é parte da biblioteca padrão de E/S e pode ser utilizado para enviar strings formatadas para o fluxo stdout. O fluxo stdout é armazenado em buffer; portanto, pode haver atrasos se a string não incluir um caractere de nova linha. Normalmente, a string fornecida não será impressa até que o buffer interno não seja preenchido; somente depois desse ponto o conteúdo é gravado no fluxo stdout.
+
+printf usa especificadores de formato começando com o caractere % para controlar a formatação da string. Além dos diferentes especificadores para tipos de dados integrados, alguns símbolos podem adicionar vários recursos como alinhamento e preenchimento. Neste caso, inserimos o número inteiro fornecido entre % e os caracteres do especificador de formato para denotar o número de espaços a serem preenchidos no lado esquerdo do item de saída. Consequentemente, podemos incluir o mesmo número para saídas de várias linhas para alinhar as entradas à direita.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char const *argv[]) {
+
+    int mm1 = 11011;
+    int mm2 = 111;
+    int mm3 = 11;
+
+    printf("%10d %d\n", mm1, mm1);
+    printf("%10d %d\n", mm2, mm2);
+    printf("%10d %d\n", mm3, mm3);
+
+    exit(EXIT_SUCCESS);
+}
+
+Resultado:
+
+11011 11011
+  111 111
+   11 11
+   
+
+
+### Use a notação `%*d` para alinhar a saída em C
+
+Como alternativa, a mesma formatação pode ser obtida usando a notação %*d, que adicionalmente requer que o inteiro seja fornecido como os argumentos de dados são - após a vírgula. Lembre-se, porém, de que se os especificadores de formato múltiplo incluem o caractere %, todos eles precisam incluir um valor inteiro separado antes do argumento correspondente.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char const *argv[]) {
+
+    int mm1 = 11011;
+    int mm2 = 111;
+    int mm3 = 11;
+
+    printf("%*d %d\n", 10, mm1, mm1);
+    printf("%*d %d\n", 10, mm2, mm2);
+    printf("%*d %d\n\n", 10, mm3, mm3);
+
+    exit(EXIT_SUCCESS);
+}
+
+Resultado:
+
+11011 11011
+  111 111
+   11 11
+
+### Use `%*d` e `%{int}d` notações para alinhar colunas na tabela
+
+Finalmente, podemos combinar os dois métodos em diferentes cenários e alinhar colunas em qualquer saída de tabela textual. Observe que às vezes é necessário que as entradas da coluna sejam alinhadas à esquerda. Podemos conseguir isso inserindo valores inteiros negativos entre os especificadores de formato ou passando-os como argumentos com a notação %*d. A última solução é mais adequada quando o preenchimento não é conhecido como constante e pode ser calculado dinamicamente durante o tempo de execução.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifndef MAX
+#define MAX 10
+#endif
+
+int main(int argc, char const *argv[]) {
+
+    char *row1[] = {"num", "name", "sum"};
+    int col1[] = { 1, 2, 3 };
+    char* col2[] = { "one", "two", "three" };
+    int col3[] = { 1243, 14234, 3324 };
+
+    printf("%*s | %*s | %*s\n", -3, row1[0], -MAX, row1[1], MAX, row1[2]);
+    printf("%*c | %*c | %*c\n", -3, '-', -MAX, '-', MAX, '-');
+    size_t len = sizeof col1 / sizeof col1[0];
+    for (int i = 0; i < len; ++i) {
+        printf("%-3d | %-10s | %10d\n", col1[i], col2[i], col3[i]);
+    }
+
+    exit(EXIT_SUCCESS);
+}
+
+Resultado:
+
+num | name       |        sum
+-   | -          |          -
+1   | one        |       1243
+2   | two        |      14234
+3   | three      |       3324
