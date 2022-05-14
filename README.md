@@ -1086,6 +1086,91 @@ for(i = 0; i < 100; i++)
 
 ### Tipos de Dados Complexos
 
+### Ponteiros
+
+####  Função com passagem por referência
+
+```C
+#include <stdio.h>
+//função que soma 10 ao valor recebido
+void soma10(int x)
+{
+  x = x + 10;  
+  printf("Valor de x apos a soma = %d \n",x);
+  return;
+}
+void soma10p(int *x)
+{
+  *x = *x + 10;  
+  printf("Valor de x apos a soma = %d \n",*x);
+  return;
+}
+int main(void)
+{
+  int numero;
+  printf("Digite um numero: ");
+  scanf("%d", &numero);  
+     
+  printf("O numero digitado foi: %d \n",numero);  
+  
+  soma10(numero);  //chamada da função
+  printf("Agora o numero vale: %d \n",numero);    
+  
+  soma10p(&numero);  //chamada da função com ponteiro como parâmetro
+  printf("Agora o numero vale: %d \n",numero);  
+  return 0;
+}
+```
+
+####  Função que troca de valores na main
+
+```C
+#include <stdio.h>
+#include <conio.h>
+//função com passagem por referência
+//note que a função tem dois ponteiros como parâmetros
+void troca_valores(int *ptrx, int *ptry);
+int main(void)
+{
+  int a, b;
+  printf("Digite o primeiro valor: ");
+  scanf("%d", &a);
+  
+  printf("Digite o segundo valor: ");
+  scanf("%d", &b);
+  
+  printf("Voce digitou os valores na seguinte ordem: %d e %d\n", a, b);
+  
+  /* Chamada da função que troca os valores das variáveis a e b.
+  Observe como são passados os endereços nos argumentos.
+  Esta é uma função chamada por referência */
+  troca_valores(&a, &b);
+  
+  //Exibindo os valores já trocados após a chamada da função
+  printf("Os valores trocados sao: %d e %d\n", a, b);
+  
+  getch();
+  return 0;
+}
+//função que troca os valores inteiros apontados por ptrx e ptry
+void troca_valores(int *ptrx, int *ptry)
+{
+  int auxiliar;
+  
+  //auxiliar recebe o conteúdo apontado por ptrx
+  auxiliar = *ptrx;
+  
+  //coloca o valor que está no local apontado por ptry em ptrx
+  *ptrx = *ptry;
+  
+  //finalmente, ptry recebe o valor armazenado em auxiliar
+  *ptry = auxiliar;
+  
+  return;
+}
+```
+
+
 ### Alocação Dinânamica de Memória
 
 Para alocar um vetor dinamicamente você deve usar a função `malloc` ou `calloc`. Você deve saber operar ponteiros para entender brevemente como funciona.
