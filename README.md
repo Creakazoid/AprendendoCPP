@@ -1316,8 +1316,8 @@ int main(int argc, char const *argv[]) {
 
 Resultado:
 
-num | name       |        sum
--   | -          |          -
-1   | one        |       1243
-2   | two        |      14234
-3   | three      |       3324
+| num | name | sum |
+| :---: | --- | --- |
+| 1   | one | 1243 |
+| 2   | two | 14234 |
+| 3   | three | 3324 |
